@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="css-reset.css">
+    <style type="text/css">
+    div {
+        width: 100px;
+        height: 100px;
+    }
+    </style>
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/1.6.4/jquery.min.js"></script>
+</head>
+
+<body>
+    <div>跑马灯</div>
+    <script type="text/javascript">
+    $(function() {
+            var colors = ['red', 'yellow', 'blue', 'green', 'orange'];
+            var oneColor = [];
+            oneColor = copy_arrayObject(colors, oneColor);
+            console.log(oneColor)
+            var $div = $('div');
+            setInterval(function() {
+                clock($div, oneColor, colors);
+
+            }, 500)
+
+            function clock(ele, colorArray, oldArray) {
+
+                var arrayLength = colorArray.length;
+                var math = Math.floor(Math.random() * arrayLength);
+                ele.css('background-color', colorArray[math]);
+                zcolor = colorArray[math];
+                colorArray.splice(math, 1);
+                if (oneColor.length == 0) {
+                    oneColor = copy_arrayObject(colors, oneColor); 
+                    oneColor.remove(zcolor);//重置颜色数组，并且删除最后一个显示的元素，使得最后不会出现重复
+                }
+
+
+                console.log(oneColor);
+
+
+            }
+
+            function copy_arrayObject(orar, newar) {
+                newar = orar.slice(0);
+                return newar;
+            }
+            /*在Array对象上添加删除选定值的*/
+           /* Array.prototype.indexOf = function(val) {
+                for (var i = 0; i < this.length; i++) {
+                    if (this[i] == val) return i;
+                }
+                return -1;
+            }*/
+            Array.prototype.remove = function(val) {
+                var index = this.indexOf(val);
+                if (index > -1) {
+                    this.splice(index, 1);
+                }
+            };
+
+        })
+        /*var ss = [1,2,3,4,5];
+        function test(ar){
+           test1(ar)
+        }
+        function test1(arr){
+            return arr.length;
+        }
+       var zzz =  test(ss);*/
+    </script>
+</body>
+
+</html>
